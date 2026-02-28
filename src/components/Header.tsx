@@ -1,4 +1,4 @@
-import { Search, Bell, Plus, ChevronDown } from 'lucide-react';
+import { Search, Bell, Plus, ChevronDown, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -12,27 +12,52 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 
-export function Header() {
+interface HeaderProps {
+  onMenuToggle: () => void;
+}
+
+export function Header({ onMenuToggle }: HeaderProps) {
   return (
-    <header className="h-16 bg-white border-b border-border px-6 flex items-center justify-between sticky top-0 z-40">
-      {/* Search */}
-      <div className="flex-1 max-w-xl">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            type="text"
-            placeholder="Search leads, students, or enquiries..."
-            className="pl-10 pr-4 h-10 bg-secondary/50 border-0 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 transition-all"
-          />
+    <header className="h-16 bg-white border-b border-border px-4 md:px-6 flex items-center justify-between sticky top-0 z-30 flex-shrink-0">
+      
+      {/* Left: Hamburger (mobile) + Search */}
+      <div className="flex items-center gap-3 flex-1 min-w-0">
+        {/* Hamburger — mobile only */}
+        <button
+          onClick={onMenuToggle}
+          className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground flex-shrink-0"
+          aria-label="Open menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
+        {/* Search bar */}
+        <div className="flex-1 max-w-xl">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search leads, students..."
+              className="pl-10 pr-4 h-10 bg-secondary/50 border-0 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 transition-all"
+            />
+          </div>
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center gap-3">
-        {/* Add New Button */}
+      {/* Right: Actions */}
+      <div className="flex items-center gap-2 md:gap-3 flex-shrink-0 ml-3">
+        {/* Add Lead — hidden on small mobile, shows sm+ */}
         <Button className="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 hidden sm:flex">
           <Plus className="w-4 h-4" />
           Add Lead
+        </Button>
+
+        {/* Add Lead icon-only — xs mobile */}
+        <Button
+          size="icon"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white sm:hidden w-9 h-9"
+        >
+          <Plus className="w-4 h-4" />
         </Button>
 
         {/* Notifications */}
@@ -85,7 +110,7 @@ export function Header() {
         {/* User Profile */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-3 p-1.5 rounded-lg hover:bg-secondary transition-colors">
+            <button className="flex items-center gap-2 md:gap-3 p-1.5 rounded-lg hover:bg-secondary transition-colors">
               <Avatar className="w-8 h-8">
                 <AvatarImage src="" />
                 <AvatarFallback className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-sm font-medium">
