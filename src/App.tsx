@@ -55,10 +55,10 @@ function App() {
       />
 
       <div
-        className={`
-          flex-1 flex flex-col transition-all duration-300 min-w-0
-          md:${sidebarCollapsed ? 'ml-16' : 'ml-64'}
-        `}
+        className={[
+          'flex-1 flex flex-col transition-all duration-300 min-w-0',
+          sidebarCollapsed ? 'md:ml-16' : 'md:ml-64',
+        ].join(' ')}
       >
         <Header onMenuToggle={() => setMobileMenuOpen(true)} />
         <main className="flex-1 overflow-auto p-4 md:p-6 pb-20 md:pb-6">
